@@ -44,8 +44,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .page.vis{display:block}
 
 /* ── LOG BTN ── */
-.log-wrap{position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(var(--safe-bottom)+64px);background:linear-gradient(transparent,var(--bg) 30%);z-index:50;pointer-events:none}
-.log-btn{width:100%;max-width:430px;margin:0 auto;display:block;padding:17px;background:var(--accent);border:none;border-radius:var(--radius);color:#0c0d0e;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:opacity 0.15s,transform 0.12s;-webkit-appearance:none;pointer-events:all}
+.log-wrap{position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(var(--safe-bottom)+64px);background:linear-gradient(transparent,var(--bg) 30%);z-index:50}
+.log-btn{width:100%;max-width:430px;margin:0 auto;display:block;padding:17px;background:var(--accent);border:none;border-radius:var(--radius);color:#0c0d0e;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:opacity 0.15s,transform 0.12s;-webkit-appearance:none}
 .log-btn:active{transform:scale(0.98);opacity:0.9}
 .log-btn:disabled{opacity:0.2;pointer-events:none}
 
@@ -341,12 +341,18 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.6);cursor:po
 .sc2-text{font-size:13px;color:var(--muted2);line-height:1.5;flex:1}
 .sc2-text strong{color:var(--text);font-weight:500}
 
+
 /* ── TOAST ── */
 .toast{position:fixed;bottom:calc(var(--safe-bottom)+74px);left:50%;transform:translateX(-50%) translateY(30px);background:var(--accent);color:#0c0d0e;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;padding:11px 22px;border-radius:99px;opacity:0;transition:opacity 0.25s,transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275);z-index:150;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.purple{background:var(--weight);color:#fff}
 .toast.green{background:var(--court);color:#fff}
 .toast.dark{background:var(--bg3);color:var(--text)}
+
+/* ── INLINE LOG BTN ── */
+.inline-log-btn{width:100%;padding:17px;background:var(--accent);border:none;border-radius:var(--radius);color:#0c0d0e;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;cursor:pointer;margin-top:16px;-webkit-appearance:none;transition:opacity 0.15s,transform 0.12s;display:block}
+.inline-log-btn:active{transform:scale(0.98);opacity:0.9}
+.inline-log-btn:disabled{opacity:0.2;pointer-events:none}
 </style>
 </head>
 <body>
@@ -398,6 +404,7 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.6);cursor:po
     <div class="fg"><div class="fl">How did it feel?</div><div class="feel-row" id="feelCourt"><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('court',1,this)">😩</div><div class="feel-lbl">rough</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('court',2,this)">😐</div><div class="feel-lbl">okay</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('court',3,this)">🙂</div><div class="feel-lbl">good</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('court',4,this)">😄</div><div class="feel-lbl">great</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('court',5,this)">🔥</div><div class="feel-lbl">fire</div></div></div></div>
     <div class="fg"><div class="fl">Notes</div><textarea id="nCourt" placeholder="How it went, what clicked..."></textarea></div>
     <div class="fg"><div class="fl">Session date</div><div class="date-picker-row"><div class="dp-lbl">Date</div><input type="date" id="dateCourt" aria-label="Session date"></div></div>
+    <button class="inline-log-btn" onclick="logSession()">Log session</button>
   </div>
 
   <!-- ── GYM FLOW ── -->
@@ -428,6 +435,7 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.6);cursor:po
       </div>
       <div class="fg"><div class="fl">How did it feel?</div><div class="feel-row" id="feelGym"><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('gym',1,this)">😩</div><div class="feel-lbl">rough</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('gym',2,this)">😐</div><div class="feel-lbl">okay</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('gym',3,this)">🙂</div><div class="feel-lbl">good</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('gym',4,this)">😄</div><div class="feel-lbl">great</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('gym',5,this)">🔥</div><div class="feel-lbl">fire</div></div></div></div>
       <div class="fg"><div class="fl">Notes</div><textarea id="nGym" placeholder="Energy level, what felt good..."></textarea></div>
+      <button class="inline-log-btn" onclick="logSession()">Log session</button>
     </div>
   </div>
 
@@ -439,6 +447,7 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.6);cursor:po
     <div class="fg"><div class="fl">How did it feel?</div><div class="feel-row" id="feelCardio"><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('cardio',1,this)">😩</div><div class="feel-lbl">rough</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('cardio',2,this)">😐</div><div class="feel-lbl">okay</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('cardio',3,this)">🙂</div><div class="feel-lbl">good</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('cardio',4,this)">😄</div><div class="feel-lbl">great</div></div><div style="flex:1;text-align:center"><div class="feel-btn" onclick="selFeel('cardio',5,this)">🔥</div><div class="feel-lbl">fire</div></div></div></div>
     <div class="fg"><div class="fl">Notes</div><textarea id="nCardio" placeholder="Distance, intensity, how it felt..."></textarea></div>
     <div class="fg"><div class="fl">Session date</div><div class="date-picker-row"><div class="dp-lbl">Date</div><input type="date" id="dateCardio" aria-label="Cardio session date"></div></div>
+    <button class="inline-log-btn" onclick="logSession()">Log session</button>
   </div>
 
   <!-- ── REST PANEL ── -->
@@ -446,6 +455,7 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.6);cursor:po
     <div class="panel-hdr"><div class="panel-dot" style="background:var(--muted)"></div><div><div class="panel-title">Rest & recovery</div><div class="panel-sub">Rest is training. Logging it counts.</div></div></div>
     <div class="fg"><div class="fl">Notes</div><textarea id="nRest" placeholder="Stretching, sleep, how the body feels..."></textarea></div>
     <div class="fg"><div class="fl">Session date</div><div class="date-picker-row"><div class="dp-lbl">Date</div><input type="date" id="dateRest" aria-label="Rest session date"></div></div>
+    <button class="inline-log-btn" onclick="logSession()">Log session</button>
   </div>
 
   <div class="div"></div>
@@ -770,6 +780,7 @@ function selType(t){
   document.querySelectorAll('.chip').forEach(c=>c.className='chip');
   document.querySelectorAll('.feel-btn').forEach(b=>b.classList.remove('sel'));
   document.getElementById('logBtn').disabled=false;
+  document.querySelectorAll('.inline-log-btn').forEach(b=>b.disabled=false);
   setTimeout(()=>document.getElementById('p'+cap(t)).scrollIntoView({behavior:'smooth',block:'nearest'}),50);
 }
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
@@ -819,6 +830,7 @@ function selectGymSession(sess){
   renderMissionCard(sess);
   showGymPhase('mission');
   document.getElementById('logBtn').disabled=false;
+  document.querySelectorAll('.inline-log-btn').forEach(b=>b.disabled=false);
 }
 
 function backToGymPick(){
@@ -1000,6 +1012,7 @@ function resetForm(){
     document.getElementById('p'+cap(x)).classList.remove('vis');
   });
   document.getElementById('logBtn').disabled=true;
+  document.querySelectorAll('.inline-log-btn').forEach(b=>b.disabled=true);
   document.querySelectorAll('textarea').forEach(t=>t.value='');
   document.querySelectorAll('.chip').forEach(c=>c.className='chip');
   document.querySelectorAll('.feel-btn').forEach(b=>b.classList.remove('sel'));
@@ -1216,6 +1229,7 @@ function confirmClear(){
     showToast('Data cleared','dark');
   }
 }
+
 
 /* ── TOAST ── */
 function showToast(msg,cls){
